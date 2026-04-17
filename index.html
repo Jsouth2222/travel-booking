@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -7,19 +6,16 @@
   <title>旅の記録</title>
 
   <!-- PWA設定 -->
-
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="旅の記録" />
   <meta name="theme-color" content="#8B1A1A" />
 
   <!-- アプリアイコン (SVGをそのまま使用) -->
-
   <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238B1A1A'/><stop offset='1' stop-color='%236B0F0F'/></linearGradient></defs><rect width='180' height='180' rx='40' fill='url(%23g)'/><text x='90' y='120' font-family='serif' font-size='90' font-weight='700' text-anchor='middle' fill='%23D4A574'>旅</text></svg>" />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%238B1A1A'/><text x='90' y='120' font-family='serif' font-size='90' font-weight='700' text-anchor='middle' fill='%23D4A574'>旅</text></svg>" />
 
   <!-- フォント -->
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -370,7 +366,6 @@
       to { opacity: 1; transform: translate(-50%, 0); }
     }
   </style>
-
 </head>
 <body>
   <div id="app"></div>
@@ -785,151 +780,147 @@ JSONのみ返答:`;
             <div class="info-box">💡 対応サイト: 一休 / じゃらん / JTB / 楽天トラベル / Booking.com / Agoda / Expedia など</div>
             <textarea class="mail-textarea" placeholder="ここに予約確認メールの本文を貼り付け..."
               oninput="state.mailText=this.value;" ${state.parsing?'disabled':''}>${escapeHtml(state.mailText)}</textarea>
-
-```
-        ${state.parseError ? `<div class="error-box">${escapeHtml(state.parseError)}</div>` : ''}
-        <button class="btn-save" onclick="parseMailWithAI()" ${state.parsing || !state.mailText.trim()?'disabled':''}>
-          ${state.parsing ? '<span class="spinner"></span> 解析中...' : '✨ AIで解析する'}
-        </button>
-        <div class="settings-note">解析結果は確認・編集画面に表示されます</div>
-      </div>
-    </div>`;
-}
-
-function renderForm() {
-  const f = state.formData;
-  return `
-    <div class="modal-overlay" onclick="resetForm()">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-          <h2 class="modal-title">${state.editingId ? '予約を編集' : '予約を追加'}</h2>
-          <button class="close-btn" onclick="resetForm()">×</button>
-        </div>
-        <div class="form-group">
-          <label class="form-label">ホテル名 *</label>
-          <input class="form-input" value="${escapeHtml(f.hotelName)}" oninput="state.formData.hotelName=this.value" placeholder="例: 星のや京都">
-        </div>
-        <div class="form-group">
-          <label class="form-label">予約サイト *</label>
-          <select class="form-input" onchange="state.formData.site=this.value">
-            ${SITES.map(s => `<option value="${s}" ${f.site===s?'selected':''}>${s}</option>`).join('')}
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">チェックイン *</label>
-            <input class="form-input" type="date" value="${f.checkIn}" oninput="state.formData.checkIn=this.value">
+            ${state.parseError ? `<div class="error-box">${escapeHtml(state.parseError)}</div>` : ''}
+            <button class="btn-save" onclick="parseMailWithAI()" ${state.parsing || !state.mailText.trim()?'disabled':''}>
+              ${state.parsing ? '<span class="spinner"></span> 解析中...' : '✨ AIで解析する'}
+            </button>
+            <div class="settings-note">解析結果は確認・編集画面に表示されます</div>
           </div>
-          <div class="form-group">
-            <label class="form-label">チェックアウト *</label>
-            <input class="form-input" type="date" value="${f.checkOut}" oninput="state.formData.checkOut=this.value">
+        </div>`;
+    }
+
+    function renderForm() {
+      const f = state.formData;
+      return `
+        <div class="modal-overlay" onclick="resetForm()">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+              <h2 class="modal-title">${state.editingId ? '予約を編集' : '予約を追加'}</h2>
+              <button class="close-btn" onclick="resetForm()">×</button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ホテル名 *</label>
+              <input class="form-input" value="${escapeHtml(f.hotelName)}" oninput="state.formData.hotelName=this.value" placeholder="例: 星のや京都">
+            </div>
+            <div class="form-group">
+              <label class="form-label">予約サイト *</label>
+              <select class="form-input" onchange="state.formData.site=this.value">
+                ${SITES.map(s => `<option value="${s}" ${f.site===s?'selected':''}>${s}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">チェックイン *</label>
+                <input class="form-input" type="date" value="${f.checkIn}" oninput="state.formData.checkIn=this.value">
+              </div>
+              <div class="form-group">
+                <label class="form-label">チェックアウト *</label>
+                <input class="form-input" type="date" value="${f.checkOut}" oninput="state.formData.checkOut=this.value">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">エリア・所在地</label>
+              <input class="form-input" value="${escapeHtml(f.location)}" oninput="state.formData.location=this.value" placeholder="例: 京都市・嵐山">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">人数</label>
+                <input class="form-input" type="number" min="1" value="${f.guests}" oninput="state.formData.guests=this.value">
+              </div>
+              <div class="form-group" style="flex:2">
+                <label class="form-label">金額 (円)</label>
+                <input class="form-input" type="number" value="${f.price}" oninput="state.formData.price=this.value" placeholder="50000">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">予約番号・確認番号</label>
+              <input class="form-input" value="${escapeHtml(f.confirmationNumber)}" oninput="state.formData.confirmationNumber=this.value" placeholder="例: ABC123456">
+            </div>
+            <div class="form-group">
+              <label class="form-label">予約ページURL</label>
+              <input class="form-input" type="url" value="${escapeHtml(f.url)}" oninput="state.formData.url=this.value" placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">メモ</label>
+              <textarea class="form-input form-textarea" rows="3" oninput="state.formData.notes=this.value" placeholder="朝食付き、温泉あり、など">${escapeHtml(f.notes)}</textarea>
+            </div>
+            <button class="btn-save" onclick="saveBooking()">${state.editingId ? '更新する' : '保存する'}</button>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">エリア・所在地</label>
-          <input class="form-input" value="${escapeHtml(f.location)}" oninput="state.formData.location=this.value" placeholder="例: 京都市・嵐山">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">人数</label>
-            <input class="form-input" type="number" min="1" value="${f.guests}" oninput="state.formData.guests=this.value">
+        </div>`;
+    }
+
+    function renderSettings() {
+      const currentKey = getApiKey();
+      return `
+        <div class="modal-overlay" onclick="state.showSettings=false;render();">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+              <h2 class="modal-title">⚙️ APIキー設定</h2>
+              <button class="close-btn" onclick="state.showSettings=false;render();">×</button>
+            </div>
+            <div class="modal-hint">
+              メール自動取り込み機能を使うには、Anthropic(Claudeの開発元)のAPIキーが必要です。
+              キーはこの端末のブラウザ内にのみ保存され、外部に送信されません。
+            </div>
+            <div class="info-box">
+              <strong>取得方法:</strong><br>
+              1. <a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:#8B1A1A;">console.anthropic.com</a> にアクセス<br>
+              2. アカウント登録 (初回 $5 分のクレジットが無料で付与されます)<br>
+              3. 「API Keys」から新しいキーを作成してコピー<br>
+              4. 下の欄に貼り付けて「保存」
+            </div>
+            <div class="form-group">
+              <label class="form-label">APIキー (sk-ant-... で始まる文字列)</label>
+              <input class="form-input" type="password" id="apikey-input" value="${escapeHtml(currentKey)}" placeholder="sk-ant-api03-...">
+            </div>
+            <button class="btn-save" onclick="saveApiKey()">保存する</button>
+            ${currentKey ? `<button class="btn-settings" style="margin-top:12px;color:#8B1A1A;border-color:#8B1A1A;" onclick="clearApiKey()">キーを削除する</button>` : ''}
+            <div class="settings-note">
+              料金目安: メール1通の解析で約 $0.002〜0.01 程度<br>
+              (月に数十件解析しても数十円です)
+            </div>
           </div>
-          <div class="form-group" style="flex:2">
-            <label class="form-label">金額 (円)</label>
-            <input class="form-input" type="number" value="${f.price}" oninput="state.formData.price=this.value" placeholder="50000">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">予約番号・確認番号</label>
-          <input class="form-input" value="${escapeHtml(f.confirmationNumber)}" oninput="state.formData.confirmationNumber=this.value" placeholder="例: ABC123456">
-        </div>
-        <div class="form-group">
-          <label class="form-label">予約ページURL</label>
-          <input class="form-input" type="url" value="${escapeHtml(f.url)}" oninput="state.formData.url=this.value" placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label class="form-label">メモ</label>
-          <textarea class="form-input form-textarea" rows="3" oninput="state.formData.notes=this.value" placeholder="朝食付き、温泉あり、など">${escapeHtml(f.notes)}</textarea>
-        </div>
-        <button class="btn-save" onclick="saveBooking()">${state.editingId ? '更新する' : '保存する'}</button>
-      </div>
-    </div>`;
-}
+        </div>`;
+    }
 
-function renderSettings() {
-  const currentKey = getApiKey();
-  return `
-    <div class="modal-overlay" onclick="state.showSettings=false;render();">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-          <h2 class="modal-title">⚙️ APIキー設定</h2>
-          <button class="close-btn" onclick="state.showSettings=false;render();">×</button>
-        </div>
-        <div class="modal-hint">
-          メール自動取り込み機能を使うには、Anthropic(Claudeの開発元)のAPIキーが必要です。
-          キーはこの端末のブラウザ内にのみ保存され、外部に送信されません。
-        </div>
-        <div class="info-box">
-          <strong>取得方法:</strong><br>
-          1. <a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:#8B1A1A;">console.anthropic.com</a> にアクセス<br>
-          2. アカウント登録 (初回 $5 分のクレジットが無料で付与されます)<br>
-          3. 「API Keys」から新しいキーを作成してコピー<br>
-          4. 下の欄に貼り付けて「保存」
-        </div>
-        <div class="form-group">
-          <label class="form-label">APIキー (sk-ant-... で始まる文字列)</label>
-          <input class="form-input" type="password" id="apikey-input" value="${escapeHtml(currentKey)}" placeholder="sk-ant-api03-...">
-        </div>
-        <button class="btn-save" onclick="saveApiKey()">保存する</button>
-        ${currentKey ? `<button class="btn-settings" style="margin-top:12px;color:#8B1A1A;border-color:#8B1A1A;" onclick="clearApiKey()">キーを削除する</button>` : ''}
-        <div class="settings-note">
-          料金目安: メール1通の解析で約 $0.002〜0.01 程度<br>
-          (月に数十件解析しても数十円です)
-        </div>
-      </div>
-    </div>`;
-}
+    // ========== イベントハンドラ ==========
+    function openMailParser() {
+      state.showMailParser = true;
+      state.parseError = '';
+      render();
+    }
+    function openNewForm() {
+      state.formData = emptyForm();
+      state.editingId = null;
+      state.showForm = true;
+      render();
+    }
+    function openSettings() {
+      state.showSettings = true;
+      render();
+    }
+    function saveApiKey() {
+      const key = document.getElementById('apikey-input').value.trim();
+      if (!key) {
+        alert('APIキーを入力してください');
+        return;
+      }
+      setApiKey(key);
+      state.showSettings = false;
+      render();
+      showToast('APIキーを保存しました');
+    }
+    function clearApiKey() {
+      if (!confirm('APIキーを削除しますか?')) return;
+      localStorage.removeItem(API_KEY_STORAGE);
+      state.showSettings = false;
+      render();
+      showToast('APIキーを削除しました');
+    }
 
-// ========== イベントハンドラ ==========
-function openMailParser() {
-  state.showMailParser = true;
-  state.parseError = '';
-  render();
-}
-function openNewForm() {
-  state.formData = emptyForm();
-  state.editingId = null;
-  state.showForm = true;
-  render();
-}
-function openSettings() {
-  state.showSettings = true;
-  render();
-}
-function saveApiKey() {
-  const key = document.getElementById('apikey-input').value.trim();
-  if (!key) {
-    alert('APIキーを入力してください');
-    return;
-  }
-  setApiKey(key);
-  state.showSettings = false;
-  render();
-  showToast('APIキーを保存しました');
-}
-function clearApiKey() {
-  if (!confirm('APIキーを削除しますか?')) return;
-  localStorage.removeItem(API_KEY_STORAGE);
-  state.showSettings = false;
-  render();
-  showToast('APIキーを削除しました');
-}
-
-// ========== 起動 ==========
-loadBookings();
-render();
-```
-
+    // ========== 起動 ==========
+    loadBookings();
+    render();
   </script>
 </body>
 </html>
